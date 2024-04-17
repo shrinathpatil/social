@@ -2,6 +2,7 @@
 
 import { connectToDb } from "@/database/connection";
 import { User } from "@/database/models";
+import { CreateUserParams } from "@/types";
 
 export const getUser = async (clerkId: string) => {
   await connectToDb();
@@ -13,4 +14,16 @@ export const getUser = async (clerkId: string) => {
 
     return user;
   } catch (error) {}
+};
+
+export const createUser = async (user: CreateUserParams) => {
+  await connectToDb();
+  try {
+    const newUser = await User.create(user);
+
+    console.log("new user created!");
+    return newUser;
+  } catch (error) {
+    console.log(error);
+  }
 };

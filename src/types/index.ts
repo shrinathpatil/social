@@ -39,4 +39,11 @@ export interface IMessages extends Document {
   message: string;
 }
 
+export type CreateUserParams = {
+  clerkId: string;
+  username: string;
+  email: string;
+  image: string;
+};
+
 export type NotificationType = "like" | "comment" | "follow";
