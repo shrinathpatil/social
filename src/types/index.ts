@@ -46,4 +46,12 @@ export type CreateUserParams = {
   image: string;
 };
 
+export type UpdateUserParams = {
+  clerkId: string;
+  username?: string;
+  email?: string;
+  image?: string;
+  coverImage?: string;
+  profession?: string;
+};
 export type NotificationType = "like" | "comment" | "follow";

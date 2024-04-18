@@ -1,5 +1,5 @@
-import { createUser } from "@/actions/user.action";
-import { CreateUserParams } from "@/types";
+import { createUser, deleteUser, updateUser } from "@/actions/user.action";
+import { CreateUserParams, UpdateUserParams } from "@/types";
 import { clerkClient } from "@clerk/nextjs";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
@@ -74,6 +74,26 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ message: "ok", user: newUser });
+  }
+
+  if (eventType === "user.updated") {
+    const { id, username, email_addresses, image_url } = evt.data;
+    const user: UpdateUserParams = {
+      clerkId: id,
+      username: username!,
+      email: email_addresses[0].email_address,
+      image: image_url,
+    };
+    const updatedUser = await updateUser(user);
+
+    return NextResponse.json({ message: "ok", user: updatedUser });
+  }
+
+  if (eventType === "user.deleted") {
+    const { id } = evt.data;
+    await deleteUser(id!);
+
+    return NextResponse.json({ message: "ok" });
   }
 
   return new Response("", { status: 200 });

@@ -52,6 +52,10 @@ const userSchema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: "Notification",
     },
+    chats: {
+      type: [Schema.Types.ObjectId],
+      ref: "Chat",
+    },
   },
   { timestamps: true }
 );
@@ -105,7 +109,11 @@ const notificationSchema = new Schema(
       type: String,
       required: true,
     },
-    userId: {
+    triggerUserId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    targetUserId: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
@@ -115,8 +123,30 @@ const notificationSchema = new Schema(
   }
 );
 
+const chatSchema = new Schema(
+  {
+    chatId: {
+      type: String,
+      required: true,
+    },
+    members: {
+      type: [Schema.Types.ObjectId],
+      ref: "User",
+    },
+    messages: {
+      type: [Schema.Types.ObjectId],
+      ref: "Message",
+    },
+  },
+  { timestamps: true }
+);
+
 const messageSchema = new Schema(
   {
+    chatId: {
+      type: Schema.Types.ObjectId,
+      ref: "Chat",
+    },
     senderId: {
       type: Schema.Types.ObjectId,
       ref: "User",
@@ -139,3 +169,4 @@ export const Comment = models.Comment || model("Comment", commentSchema);
 export const Notification =
   models.Notification || model("Notification", notificationSchema);
 export const Message = models.Message || model("Message", messageSchema);
+export const Chat = models.Chat || model("Chat", chatSchema);
