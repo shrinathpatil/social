@@ -70,7 +70,7 @@ const postSchema = new Schema(
       type: [String],
       default: [],
     },
-    descripiton: {
+    description: {
       type: String,
     },
     comments: {

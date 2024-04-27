@@ -4,18 +4,20 @@ import {
   ProfileCard,
   SuggestedFriendsCard,
 } from "@/components/shared";
+import { getSession } from "@/hooks/getSession";
 import { ReactNode } from "react";
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
+  const { userId } = getSession();
   return (
-    <main className="w-full min-h-screen text-black bg-background ">
+    <main className="w-full  text-black bg-background min-h-screen">
       <Navbar />
-      <div className="wrapper pt-8  flex gap-x-8">
+      <div className="wrapper pt-8  flex gap-x-8 h-screen">
         <ProfileCard />
-        <div className="w-full h-screen bg-green-300">{children}</div>
-        <SuggestedFriendsCard />
+        <div className="w-full h-screen ">{children}</div>
+        <SuggestedFriendsCard userId={userId} />
       </div>
-      <MobileNavbar />
+      <MobileNavbar userId={userId} />
     </main>
   );
 };

@@ -6,6 +6,7 @@
   :root {
     --background: 0 0% 96%;
     --foreground: 0 0% 100%;
+    --comment: 217 40% 96%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -67,7 +68,7 @@
 }
 
 body {
-  overflow-x: overlay;
+  overflow-x: hidden;
 }
 ::-webkit-scrollbar {
   width: 8px;
@@ -98,5 +99,11 @@ body {
   }
   .link-icon {
     @apply transition cursor-pointer;
+  }
+  .sender-message {
+    border-radius: 0.5rem 0 0.5rem 0.5rem;
+  }
+  .receiver-message {
+    border-radius: 0 0.5rem 0.5rem 0.5rem;
   }
 }

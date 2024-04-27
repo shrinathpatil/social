@@ -1,13 +1,17 @@
 "use client";
+import { getUser } from "@/actions/user.action";
 import { cn } from "@/lib/utils";
+import { IUser } from "@/types";
 import { Bell, Home, Search } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const MobileNavbar = () => {
+const MobileNavbar = ({userId}:{userId:string}) => {
   const pathname = usePathname();
+  const [user, setUser] = useState<IUser | null>(null);
   const links = [
     {
       route: "/",
@@ -22,6 +26,14 @@ const MobileNavbar = () => {
       Icon: Bell,
     },
   ];
+
+   useEffect(() => {
+    const getCurrentUser = async () => {
+      const res = await getUser(userId!);
+      setUser(res);
+    }
+    getCurrentUser();
+  },[userId])
   return (
     <div className="fixed hidden max-sm:flex bottom-0 left-0 h-[72px] w-full z-[10]">
       <ul className="bg-white w-full h-full flex items-center justify-between px-10 py-6">
@@ -41,14 +53,14 @@ const MobileNavbar = () => {
             </Link>
           );
         })}
-        <Link href="/profile">
+        {user &&<Link href="/profile" className="relative w-[28px] h-[28px]">
           <Image
-            src="/assets/icons/Avatar.png"
-            width={28}
-            height={28}
+            src={user?.image!}
+            fill
             alt="avatar"
+            className="rounded-full object-cover"
           />
-        </Link>
+        </Link>}
       </ul>
     </div>
   );

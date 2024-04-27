@@ -10,7 +10,7 @@ export const connectToDb = async () => {
     }
 
     mongoose.set("strictQuery", true);
-    const url = process.env.MONGODB_LOCAL_URL!;
+    const url = process.env.MONGODB_SERVER_URL!;
     const connect = await mongoose.connect(url);
     connection = connect.connections[0].readyState === 1;
   } catch (error) {

@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -21,7 +22,10 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={`${inter.className} bg-background`}>
+          {children}
+          <Toaster position="top-right" richColors />
+        </body>
       </html>
     </ClerkProvider>
   );

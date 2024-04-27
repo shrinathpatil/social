@@ -7,36 +7,49 @@ export interface IUser extends Document {
   image?: string;
   coverImage?: string;
   profession?: string;
-  posts: [string] | [IPost];
-  savedPosts: [string] | [IPost];
-  likedPosts: [string] | [IPost];
-  followers: [string] | [IUser];
-  following: [string] | [IUser];
-  notifications: [string] | [INotification];
+  posts: string[] | IPost[];
+  savedPosts: string[] | IPost[];
+  likedPosts: string[] | IPost[];
+  followers: string[] | IUser[];
+  following: string[] | IUser[];
+  notifications: string[] | INotification[];
 }
 
 export interface IPost extends Document {
-  userId: string | IUser;
-  images: [string];
-  descripiton: string;
-  comments: [string] | [IComment];
+  userId: IUser;
+  images: string[];
+  description: string;
+  comments: IComment[];
+  createdAt: Date;
 }
 
 export interface IComment extends Document {
-  userId: string | IUser;
-  postId: string | IPost;
+  userId: IUser;
+  postId: IPost;
   comment: string;
+  createdAt: Date;
+}
+
+export interface IChat extends Document {
+  chatId: string;
+  members: IUser[];
+  messages: IMessages[];
+  createdAt: Date;
 }
 
 export interface INotification extends Document {
   notificationType: "like" | "comment" | "follow";
-  userId: string | IUser;
+  triggerUserId: IUser;
+  targetUserId: IUser;
+  createdAt: Date;
 }
 
 export interface IMessages extends Document {
-  userId: string | IUser;
-  receiverId: string | IUser;
+  chatId: string;
+  senderId: IUser;
+  receiverId: IUser;
   message: string;
+  createdAt: Date;
 }
 
 export type CreateUserParams = {
@@ -53,5 +66,62 @@ export type UpdateUserParams = {
   image?: string;
   coverImage?: string;
   profession?: string;
+};
+
+export type CreatePostParams = {
+  userId: string;
+  images?: string[];
+  description: string;
+};
+export type EditPostParams = {
+  postId: string;
+  description: string;
+  images: string[];
+};
+
+export type LikePostParams = {
+  userId: string;
+  ownerId: string;
+  postId: string;
+  path: string;
+};
+
+export type CommentParams = {
+  triggerUserId: string;
+  targetUserId: string;
+  postId: string;
+  comment: string;
+};
+
+export type SavePostParams = {
+  userId: string;
+  postId: string;
+  path: string;
+};
+
+export type FollowUserParams = {
+  triggerUserId: string;
+  targetUserId: string;
+};
+export type UnfollowUserParams = {
+  triggerUserId: string;
+  targetUserId: string;
+};
+
+export type CreateChatParams = {
+  triggerUserId: string;
+  targetUserId: string;
+};
+
+export type CreateMessageParams = {
+  chatId: string;
+  senderId: string;
+  message: string;
+};
+
+export type ChatObject = {
+  id: string;
+  chatId: string;
+  userId: string;
 };
 export type NotificationType = "like" | "comment" | "follow";
