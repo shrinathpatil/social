@@ -58,7 +58,10 @@ const NotificationPage = async () => {
       <div className="flex w-full px-4 flex-col py-2 items-center">
         {notifications.map((notification) => {
           return (
-            <div className="group w-full flex items-center justify-between px-4 py-2 rounded-md hover:bg-[#f0f3f8] cursor-pointer">
+            <div
+              className="group w-full flex items-center justify-between px-4 py-2 rounded-md hover:bg-[#f0f3f8] cursor-pointer"
+              key={notification?._id}
+            >
               <div className="flex gap-x-4 items-center px-4 py-2">
                 <span className="relative w-[35px] h-[35px] ">
                   <Image
