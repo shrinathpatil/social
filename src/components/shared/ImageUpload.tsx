@@ -27,7 +27,7 @@ const ImageUpload = ({ images, setImages }: Props) => {
       <input {...getInputProps()} className="cursor-pointer" />
       <div className="flex items-center flex-col gap-y-4 text-grey-500">
         <ImageUp size={24} className="text-primary/80" />
-        <div className="flex gap-x-6">
+        <div className="flex gap-x-6 max-sm:flex-col gap-y-2">
           <Button type="button" className="rounded-full h-[20px] p-4">
             Select from computer
           </Button>

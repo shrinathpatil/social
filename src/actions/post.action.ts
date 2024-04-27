@@ -99,7 +99,11 @@ export const getLikedPosts = async (userId: string) => {
 export const deletePost = async (postId: string) => {
   await connectToDb();
   try {
+    const post = await Post.findById(postId);
+    const userId = post?._id;
+
     await Post.findByIdAndDelete(postId);
+    await User.findByIdAndUpdate(userId, { $pull: { posts: postId } });
     revalidatePath("/");
     revalidatePath("/profile");
     return { message: "post deleted!" };
