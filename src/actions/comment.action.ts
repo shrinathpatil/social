@@ -44,7 +44,12 @@ export const commentPost = async ({
     await pusher.trigger(targetUserId, "notification-created-event", "");
 
     revalidatePath("/notifications");
-    return JSON.parse(JSON.stringify(newComment));
+    const res = await Comment.findById(newComment._id).populate({
+      path: "userId",
+      model: User,
+      select: "_id username image profession",
+    });
+    return JSON.parse(JSON.stringify(res));
   } catch (error) {
     console.log(error);
   }
