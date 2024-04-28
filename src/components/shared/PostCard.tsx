@@ -58,13 +58,14 @@ const PostCard = ({ post, user }: Props) => {
           <ImagesDisplay images={post?.images} />
         </div>
       )}
-
-      <ShowComments
-        user={user}
-        postId={post?._id}
-        postUserId={post?.userId._id}
-        targetUserId={post?.userId._id}
-      />
+      <div className="h-[1000px] overflow-y-auto">
+        <ShowComments
+          user={user}
+          postId={post?._id}
+          postUserId={post?.userId._id}
+          targetUserId={post?.userId._id}
+        />
+      </div>
     </div>
   );
 };
