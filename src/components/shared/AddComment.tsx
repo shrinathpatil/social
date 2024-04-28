@@ -38,6 +38,7 @@ const AddComment = ({
       const res = await commentPost(newComment);
       if (res) {
         addComment((prev) => [res, ...prev]);
+        setComment("");
         toast.success("Commented successfully!");
       } else {
         toast.error("Failed to comment!");
