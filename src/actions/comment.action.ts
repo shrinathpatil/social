@@ -25,11 +25,14 @@ export const commentPost = async ({
       { $push: { comments: newComment._id } },
       { new: true }
     );
-    console.log("comment created successfully");
-    revalidatePath("/");
 
     if (triggerUserId === targetUserId) {
-      return JSON.parse(JSON.stringify(newComment));
+      const res = await Comment.findById(newComment._id).populate({
+        path: "userId",
+        model: User,
+        select: "_id username image profession",
+      });
+      return JSON.parse(JSON.stringify(res));
     }
 
     const notification = await Notification.create({
@@ -43,7 +46,6 @@ export const commentPost = async ({
     });
     await pusher.trigger(targetUserId, "notification-created-event", "");
 
-    revalidatePath("/notifications");
     const res = await Comment.findById(newComment._id).populate({
       path: "userId",
       model: User,
