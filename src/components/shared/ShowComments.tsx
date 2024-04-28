@@ -80,7 +80,7 @@ const ShowComments = ({ postId, postUserId, user, targetUserId }: Props) => {
             targetUserId={targetUserId}
             addComment={setComments}
           />
-          <div className="mt-4 flex flex-col gap-y-6 p-3 max-h-[1000px] overscroll-y-auto">
+          <div className="mt-4 flex flex-col gap-y-6 p-3 max-h-[600px] overflow-y-auto">
             {comments.length > 0 &&
               comments.map((comment) => (
                 <Comment
